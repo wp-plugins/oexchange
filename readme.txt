@@ -9,11 +9,13 @@ Stable tag: 0.13
 Adds OExchange support to WordPress' "Press This" bookmarklet (http://oexchange.org).
 
 This plugin requires:
-    * the /.well-known/-plugin: http://wordpress.org/extend/plugins/well-known/
-    * the host-meta-plugin: http://wordpress.org/extend/plugins/host-meta/
+
+* the /.well-known/-plugin: http://wordpress.org/extend/plugins/well-known/
+* the host-meta-plugin: http://wordpress.org/extend/plugins/host-meta/
 
 Supported Plugins:
-    * the webfinger-plugin: http://wordpress.org/extend/plugins/webfinger/
+
+* the webfinger-plugin: http://wordpress.org/extend/plugins/webfinger/
 
 From the website:
 
