@@ -23,7 +23,7 @@ This'll help you get up and running, whether you're a service that can accept co
 
 == Changelog ==
 
-= 0.5 =
+= 1.0 =
 * Plugin administration
 * Icon support
 * Admin page
