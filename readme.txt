@@ -4,7 +4,7 @@ Donate link: http://14101978.de
 Tags: XAuth, OExchange, Share, exchange, like, bookmarklet, press-this, diso
 Requires at least: 2.7
 Tested up to: 3.9
-Stable tag: 0.5
+Stable tag: 1.0
 
 Adds OExchange support to WordPress' "Press This" bookmarklet (http://oexchange.org).
 
