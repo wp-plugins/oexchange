@@ -1,10 +1,10 @@
 === OExchange ===
 Contributors: Matthias Pfefferle
 Donate link: http://14101978.de
-Tags: XAuth, OExchange, Share, exchange, like, bookmarklet, press-this
+Tags: XAuth, OExchange, Share, exchange, like, bookmarklet, press-this, diso
 Requires at least: 2.7
-Tested up to: 2.9.9
-Stable tag: 0.13
+Tested up to: 3.9
+Stable tag: 0.5
 
 Adds OExchange support to WordPress' "Press This" bookmarklet (http://oexchange.org).
 
@@ -22,6 +22,12 @@ From the website:
 This'll help you get up and running, whether you're a service that can accept content, a site  that has content to share, or a tool of some sort. Remember that OExchange isn't limited to "sharing" things; it applies to any case where one service wants to send URL-based content to another -- microblogging, translating, printing, whatever.
 
 == Changelog ==
+
+= 0.5 =
+* Plugin administration
+* Icon support
+* Admin page
+* Some doku
 
 = 0.13 =
 * Initial release
