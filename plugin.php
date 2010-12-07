@@ -3,7 +3,7 @@
 Plugin Name: OExchange
 Plugin URI: http://wordpress.org/extend/plugins/oexchange/
 Description: Adds OExchange support to WordPress' "Press This" bookmarklet
-Version: 1.0
+Version: 1.1
 Author: Matthias Pfefferle
 Author URI: http://notizblog.org/
 */
@@ -112,9 +112,9 @@ class OExchangePlugin {
     $xrd .= '<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">';
     $xrd .= '  <Subject>'.'</Subject>';
     $xrd .= '  <Property
-        type="http://www.oexchange.org/spec/0.8/prop/vendor">'.get_option('blogname').'</Property>';
+        type="http://www.oexchange.org/spec/0.8/prop/vendor">'.get_bloginfo('name').'</Property>';
     $xrd .= '  <Property
-        type="http://www.oexchange.org/spec/0.8/prop/title">'.get_option('blogdescription').'</Property>';
+        type="http://www.oexchange.org/spec/0.8/prop/title">'.get_bloginfo('description').'</Property>';
     $xrd .= '  <Property
         type="http://www.oexchange.org/spec/0.8/prop/name">"Press This" bookmarklet</Property>';
     $xrd .= '  <Property
@@ -151,14 +151,14 @@ class OExchangePlugin {
     echo '<Link
             rel="http://oexchange.org/spec/0.8/rel/resident-target"
             type="application/xrd+xml"
-            href="'.get_option( 'siteurl' ).'/?oexchange=xrd" />'."\n";
+            href="'.get_bloginfo( 'url' ).'/?oexchange=xrd" />'."\n";
   }
   
   /**
    * adds the yiid-items to the admin-menu
    */
   function addMenuItem() {
-    add_options_page('OExchange', 'OExchange Settings', 10, 'oexchange', array('OExchangePlugin', 'showSettings'));
+    add_options_page('OExchange', 'OExchange', 10, 'oexchange', array('OExchangePlugin', 'showSettings'));
   }
   
   /**
@@ -196,7 +196,7 @@ class OExchangePlugin {
         <tr valign="top">
         <th scope="row">OExchange URL</th>
         <td class="defaultavatarpicker"><fieldset><legend class="screen-reader-text"><span>Default Avatar</span></legend>
-          Your Blogs discovery-url: <a href="<?php echo get_option( 'siteurl' ).'/?oexchange=xrd'; ?>" target="_blank"><?php echo get_option( 'siteurl' ).'/?oexchange=xrd'; ?></a>
+          Your Blogs discovery-url: <a href="<?php echo get_bloginfo( 'url' ).'/?oexchange=xrd'; ?>" target="_blank"><?php echo get_bloginfo( 'url' ).'/?oexchange=xrd'; ?></a>
         </fieldset>
         </td>
         </tr>
@@ -205,7 +205,7 @@ class OExchangePlugin {
         <th scope="row">OExchange Icon</th>
         <td class="defaultavatarpicker"><fieldset><legend class="screen-reader-text"><span>Default Avatar</span></legend>
           This Plugin uses the Gravatar of the admin-email: <strong><?php bloginfo("admin_email"); ?></strong> as OExchange icons.
-          Visit <a href="http://gravatar.com" target"_blank">gravatar.com</a> to customize yours.
+          Visit <a href="http://gravatar.com" target="_blank">gravatar.com</a> to customize yours.
           <br />
           <?php echo get_avatar(get_bloginfo("admin_email"), 32, "http://www.oexchange.org/images/logo_32x32.png"); ?> 32x32<br />
           <?php echo get_avatar(get_bloginfo("admin_email"), 16, "http://www.oexchange.org/images/logo_16x16.png"); ?> 16x16<br />
