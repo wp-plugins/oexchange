@@ -4,18 +4,15 @@ Donate link: http://14101978.de
 Tags: XAuth, OExchange, Share, exchange, like, bookmarklet, press-this, diso
 Requires at least: 2.7
 Tested up to: 3.9
-Stable tag: 1.1
+Stable tag: 1.1.1
 
 Adds OExchange support to WordPress' "Press This" bookmarklet (http://oexchange.org).
-
-This plugin requires:
-
-* the /.well-known/-plugin: http://wordpress.org/extend/plugins/well-known/
-* the host-meta-plugin: http://wordpress.org/extend/plugins/host-meta/
 
 Supported Plugins:
 
 * the webfinger-plugin: http://wordpress.org/extend/plugins/webfinger/
+* the /.well-known/-plugin: http://wordpress.org/extend/plugins/well-known/
+* the host-meta-plugin: http://wordpress.org/extend/plugins/host-meta/
 
 From the website:
 
@@ -23,6 +20,8 @@ This'll help you get up and running, whether you're a service that can accept co
 
 == Changelog ==
 
+= 1.1.1 =
+* HTML Meta-Link
 = 1.1 =
 * Cosmetics
 = 1.0 =

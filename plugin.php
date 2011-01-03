@@ -3,7 +3,7 @@
 Plugin Name: OExchange
 Plugin URI: http://wordpress.org/extend/plugins/oexchange/
 Description: Adds OExchange support to WordPress' "Press This" bookmarklet
-Version: 1.1
+Version: 1.1.1
 Author: Matthias Pfefferle
 Author URI: http://notizblog.org/
 */
@@ -24,6 +24,7 @@ add_action('host_meta_xrd', array('OExchangePlugin', 'hostMetaXrd'));
 add_action('webfinger_xrd', array('OExchangePlugin', 'hostMetaXrd'));
 add_action('init', array('OExchangePlugin', 'init'));
 add_action('admin_menu', array('OExchangePlugin', 'addMenuItem'));
+add_action('wp_head', array('OExchangePlugin', 'htmlMetaLink'), 5);
 
 if (is_admin() && $_GET['page'] == 'oexchange') {
   require_once(ABSPATH . 'wp-admin/admin.php');
@@ -155,6 +156,15 @@ class OExchangePlugin {
   }
   
   /**
+   * generates header-link
+   *
+   * @link http://www.oexchange.org/spec/#discovery-page
+   */
+  function htmlMetaLink() {
+    echo '<link rel="http://oexchange.org/spec/0.8/rel/resident-target" type="application/xrd+xml" href="'.get_bloginfo( 'url' ).'/?oexchange=xrd" />'."\n";
+  }
+  
+  /**
    * adds the yiid-items to the admin-menu
    */
   function addMenuItem() {
@@ -176,7 +186,7 @@ class OExchangePlugin {
     return $grav_url;
   }
   
-    /**
+  /**
    * displays the yiid settings page
    */
   function showSettings() {
