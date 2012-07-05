@@ -1,12 +1,16 @@
 === OExchange ===
-Contributors: Matthias Pfefferle
+Contributors: pfefferle
 Donate link: http://14101978.de
-Tags: XAuth, OExchange, Share, exchange, like, bookmarklet, press-this, diso
+Tags: OExchange, share, exchange, like, bookmarklet, press-this, diso, web intents
 Requires at least: 2.7
-Tested up to: 3.1
-Stable tag: 1.1.2
+Tested up to: 3.4.1
+Stable tag: 1.5
 
-Adds OExchange support to WordPress' "Press This" bookmarklet (http://oexchange.org).
+Adds OExchange and Web Intents support to WordPress
+
+== Description ==
+
+Adds OExchange and Web Intents support to WordPress' "Press This" bookmarklet (http://oexchange.org).
 
 Supported Plugins:
 
@@ -19,6 +23,12 @@ From the website:
 This'll help you get up and running, whether you're a service that can accept content, a site  that has content to share, or a tool of some sort. Remember that OExchange isn't limited to "sharing" things; it applies to any case where one service wants to send URL-based content to another -- microblogging, translating, printing, whatever.
 
 == Changelog ==
+
+= 1.5 =
+* added Web Intents
+* added webfinger support
+* fixed host-meta support
+* better spec support
 
 = 1.1.2 =
 * some wordpress 3.1 fixes
