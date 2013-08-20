@@ -3,7 +3,7 @@
 Plugin Name: OExchange
 Plugin URI: http://wordpress.org/extend/plugins/oexchange/
 Description: Adds OExchange support to WordPress' "Press This" bookmarklet
-Version: 1.5
+Version: 1.6.0
 Author: Matthias Pfefferle
 Author URI: http://notizblog.org/
 */
@@ -23,17 +23,8 @@ add_filter('query_vars', array('OExchangePlugin', 'query_vars'));
 add_filter('host_meta', array('OExchangePlugin', 'host_meta_link'));
 add_filter('webfinger', array('OExchangePlugin', 'webfinger_link'));
 add_action('init', array('OExchangePlugin', 'init'));
-add_action('admin_head', array('OExchangePlugin', 'admin_head'));
 add_action('admin_menu', array('OExchangePlugin', 'add_menu_item'));
 add_action('wp_head', array('OExchangePlugin', 'html_meta_link'), 5);
-
-if (is_admin() && $_GET['page'] == 'oexchange') {
-  require_once(ABSPATH . 'wp-admin/admin.php');
-  require_once(ABSPATH . 'wp-admin/includes/plugin-install.php');
-  wp_enqueue_style( 'plugin-install' );
-  wp_enqueue_script( 'plugin-install' );
-  add_thickbox();
-}
 
 /**
  * OExchange class
@@ -78,51 +69,7 @@ class OExchangePlugin {
         $_GET['i'] = $_GET['imageurl'];
       }
     }
-
-    wp_enqueue_script("webintents", "http://webintents.org/webintents.min.js");
   }
-  
-  function admin_head() {
-    if (!is_press_this()) {
-      return;
-    }
-?>
-    <intent action='http://webintents.org/share' type='text/uri-list' href='<?php echo admin_url('press-this.php'); ?>' disposition='window|inline' />
-    <script type="text/javascript">
-      var wpintent = null;
-      var data = null;
-      var url_param = "<?php $_GET["u"]; ?>";
-      
-      // check browser support
-      if (typeof(WebKitIntent) !== "undefined") {
-        wpintent = WebKitIntent;
-      } else if (typeof(intent) !== "undefined") {
-        wpintent = intent;
-      }
-      
-      // check request for intents
-      if(wpintent && url_param == "") {
-        // check data-type
-        if(wpintent.data instanceof Array)
-          data = wpintent.data[0];
-        else
-          data = wpintent.data;
-        
-        // check intent-type
-        if(wpintent.type === "text/uri-list") {
-          var href = "<?php echo admin_url('press-this.php'); ?>?u=" + encodeURI(data);
-          window.location = href;
-        }
-        else if(wpintent.type === "text/plain") {
-          var href = "<?php echo admin_url('press-this.php'); ?>?s=" + encodeURIComponent(data);
-          window.location = href;
-        }
-        
-        wpintent.postResult(wpintent.data);
-      }
-    </script>
-<?php
-    }
 
   /**
    * parse request and show xrd file
@@ -146,35 +93,16 @@ class OExchangePlugin {
    * @return string
    */
   function create_xrd() {
-    $xrd  = "<?xml version='1.0' encoding='UTF-8'?>";
-    $xrd .= '<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">';
-    $xrd .= '  <Subject>'.'</Subject>';
-    $xrd .= '  <Property
-        type="http://www.oexchange.org/spec/0.8/prop/vendor">'.get_bloginfo('name').'</Property>';
-    $xrd .= '  <Property
-        type="http://www.oexchange.org/spec/0.8/prop/title">'.get_bloginfo('description').'</Property>';
-    $xrd .= '  <Property
-        type="http://www.oexchange.org/spec/0.8/prop/name">"Press This" bookmarklet</Property>';
-    $xrd .= '  <Property
-        type="http://www.oexchange.org/spec/0.8/prop/prompt">Press This</Property>';
-
-    $xrd .= '  <Link
-        rel= "icon"
-        href="'.OExchangePlugin::get_icon_url(16).'"
-        type="image/png"
-        />';
-
-    $xrd .= '  <Link
-        rel= "icon32"
-        href="'.OExchangePlugin::get_icon_url(32).'"
-        type="image/png"
-        />';
-
-    $xrd .= '  <Link
-        rel= "http://www.oexchange.org/spec/0.8/rel/offer"
-        href="'.admin_url('press-this.php').'"
-        type="text/html"
-        />';
+    $xrd = '<?xml version="1.0" encoding="UTF-8"?>'."\n";
+    $xrd .= '<XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">'."\n";
+    $xrd .= '  <Subject>'.site_url("/").'</Subject>'."\n";
+    $xrd .= '  <Property type="http://www.oexchange.org/spec/0.8/prop/vendor">'.get_bloginfo('name').'</Property>'."\n";
+    $xrd .= '  <Property type="http://www.oexchange.org/spec/0.8/prop/title">'.get_bloginfo('description').'</Property>'."\n";
+    $xrd .= '  <Property type="http://www.oexchange.org/spec/0.8/prop/name">"Press This" bookmarklet</Property>'."\n";
+    $xrd .= '  <Property type="http://www.oexchange.org/spec/0.8/prop/prompt">Press This</Property>'."\n";
+    $xrd .= '  <Link rel= "icon" href="'.OExchangePlugin::get_icon_url(16).'" />'."\n";
+    $xrd .= '  <Link rel= "icon32" href="'.OExchangePlugin::get_icon_url(32).'" />'."\n";
+    $xrd .= '  <Link rel= "http://www.oexchange.org/spec/0.8/rel/offer" href="'.admin_url('press-this.php').'" type="text/html"/>'."\n";
     $xrd .= '</XRD>';
 
     return $xrd;
@@ -217,7 +145,7 @@ class OExchangePlugin {
    * adds the yiid-items to the admin-menu
    */
   function add_menu_item() {
-    add_options_page('OExchange', 'OExchange', 10, 'oexchange', array('OExchangePlugin', 'show_settings'));
+    add_options_page('OExchange', 'OExchange', 'administrator', 'oexchange', array('OExchangePlugin', 'show_settings'));
   }
   
   /**
@@ -276,22 +204,18 @@ class OExchangePlugin {
     
     <h3>Plugin dependencies</h3>
 
-    <p>OExchange works perfect with the following plugins:</p>
-<?php  
-  $plugins = array();
-  $plugins[] = plugins_api('plugin_information', array('slug' => 'host-meta'));
-  $plugins[] = plugins_api('plugin_information', array('slug' => 'well-known'));
-  $plugins[] = plugins_api('plugin_information', array('slug' => 'webfinger'));
-  
-  // check wordpress version
-  if (get_bloginfo('version') <= 3.0) {
-    display_plugins_table($plugins);
-  } else {
-    $wp_list_table = _get_list_table('WP_Plugin_Install_List_Table');
-    $wp_list_table->items = $plugins;
-    $wp_list_table->display();
-  }
- ?>
+    <p>The OExchange plugin requires the following plugins to work properly:</p>
+
+    <ul>
+      <li><a href="<?php echo site_url("/wp-admin/plugin-install.php?tab=search&s=webfinger&plugin-search-input=Search+Plugins"); ?>">Webfinger plugin</a></li>
+      <li><a href="<?php echo site_url("/wp-admin/plugin-install.php?tab=search&s=host-meta&plugin-search-input=Search+Plugins"); ?>">host-meta plugin</a></li>
+    </ul>
+    
+    <h3>Discovery file</h3>
+    
+    <p>This is how the discovery file looks like:</p>
+    
+    <pre><code><?php echo htmlentities(OExchangePlugin::create_xrd()); ?></code></pre>
   </div>    
 <?php
   }
